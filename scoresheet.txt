@@ -1,0 +1,31 @@
+Function selectOldScoreSheet()
+
+Set fd = Application.FileDialog(msoFileDialogFilePicker)
+
+With fd
+    .AllowMultiSelect = False
+    .Title = "PLEASE SELECT THE OLD SCORESHEET YOU WOULD LIKE TO INGEST"
+    .Filters.Add "Excel", "*.xl*"
+    .Filters.Add "All", "*.*"
+    
+    If .Show = True Then
+        strFilePath = .SelectedItems(1)
+    End If
+
+End With
+
+End Function
+
+
+Function openFile()
+
+Dim wb As Workbook
+
+Application.AutomationSecurity = msoAutomationSecurityForceDisable
+Application.ScreenUpdating = False
+Workbooks.Open Filename:=strFilePath
+ActiveWindow.Visible = False
+Application.AutomationSecurity = msoAutomationSecurityByUI
+
+End Function
+
