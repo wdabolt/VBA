@@ -1,3 +1,6 @@
+Option Explicit
+public Dim strFilePath As String
+public Dim fd As Office.FileDialog
 Function selectOldScoreSheet()
 
 Set fd = Application.FileDialog(msoFileDialogFilePicker)
@@ -15,8 +18,6 @@ With fd
 End With
 
 End Function
-
-
 Function openFile()
 
 Dim wb As Workbook
@@ -24,8 +25,11 @@ Dim wb As Workbook
 Application.AutomationSecurity = msoAutomationSecurityForceDisable
 Application.ScreenUpdating = False
 Workbooks.Open Filename:=strFilePath
-ActiveWindow.Visible = False
+'ActiveWindow.Visible = False
 Application.AutomationSecurity = msoAutomationSecurityByUI
 
 End Function
+
+
+
 
