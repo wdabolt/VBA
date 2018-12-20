@@ -1,0 +1,49 @@
+Option Explicit
+Dim strFilePath As String
+Dim fd As Office.FileDialog
+Dim wb As Workbook
+Function selectOldScoreSheet()
+
+Set fd = Application.FileDialog(msoFileDialogFilePicker)
+
+With fd
+    .AllowMultiSelect = False
+    .Title = "PLEASE SELECT THE OLD SCORESHEET YOU WOULD LIKE TO INGEST"
+    .Filters.Add "Excel", "*.xl*"
+    .Filters.Add "All", "*.*"
+    
+    If .Show = True Then
+        strFilePath = .SelectedItems(1)
+    End If
+
+End With
+
+End Function
+Function openFile()
+
+
+
+Application.AutomationSecurity = msoAutomationSecurityForceDisable
+Application.ScreenUpdating = False
+Workbooks.Open Filename:=strFilePath
+'ActiveWindow.Visible = False
+Application.AutomationSecurity = msoAutomationSecurityByUI
+
+End Function
+
+'Function copyRows()
+'Dim fso As Object
+'Dim objFile As Object
+'
+'Set fso = VBA.CreateObject("Scripting.FileSystemObject")
+'    Set objFile = fso.GetFile(strFilePath)
+'
+'Dim currentWB As Workbook
+'
+'Set currentWB = ActiveWorkbook
+'
+'Application.WindowState = xlNormal
+'    Windows(objFile.Name).Activate
+'    Sheets("Score Sheet").Select
+'    Sheets("Score Sheet").Move After:=Workbooks(currentWB.Name).Sheets(2)
+'End Function
