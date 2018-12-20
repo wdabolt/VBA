@@ -1,6 +1,7 @@
 Option Explicit
-public Dim strFilePath As String
-public Dim fd As Office.FileDialog
+Dim strFilePath As String
+Dim fd As Office.FileDialog
+Dim wb As Workbook
 Function selectOldScoreSheet()
 
 Set fd = Application.FileDialog(msoFileDialogFilePicker)
@@ -20,7 +21,7 @@ End With
 End Function
 Function openFile()
 
-Dim wb As Workbook
+
 
 Application.AutomationSecurity = msoAutomationSecurityForceDisable
 Application.ScreenUpdating = False
@@ -30,6 +31,27 @@ Application.AutomationSecurity = msoAutomationSecurityByUI
 
 End Function
 
+Function copyRows()
+Dim fso As Object
+Dim objFile As Object
 
+Set fso = VBA.CreateObject("Scripting.FileSystemObject")
+    Set objFile = fso.GetFile(strFilePath)
 
+Dim currentWB As Workbook
 
+Set currentWB = ActiveWorkbook
+
+Application.WindowState = xlNormal
+    Windows(objFile.Name).Activate
+    Sheets("Score Sheet").Select
+    Application.AutomationSecurity = msoAutomationSecurityForceDisable
+    Sheets("Score Sheet").Copy After:=Workbooks(currentWB.Name).Sheets(2)
+    Application.AutomationSecurity = msoAutomationSecurityByUI
+    Windows(objFile.Name).Close
+    Sheets("Score Sheet").Select
+    Sheets("Score Sheet").Name = "Old ScoreSheet"
+    
+    
+    
+End Function
